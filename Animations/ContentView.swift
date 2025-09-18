@@ -8,25 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var textColor = Color.black
+    @State private var animationAmount = 1.0
     var body: some View {
-        Text("Hello, World!")
-            .font(.largeTitle.bold())
-            .foregroundStyle(textColor)
-        
-        HStack {
-            Button("RED") {
-                withAnimation {
-                    textColor = .red
-                }
-            }
-            Button("BLACK") {
-                withAnimation {
-                    textColor = .black
-                }
-            }
+        Button("Tap Me") {
+            animationAmount += 0.1
         }
-        .buttonStyle(.borderedProminent)
+        .padding(50)
+        .background(.red)
+        .foregroundStyle(.white)
+        .clipShape(.circle)
+        .scaleEffect(animationAmount)
+        .blur(radius: (animationAmount - 1) * 3)
+        .animation(.default, value: animationAmount)
     }
 }
 
