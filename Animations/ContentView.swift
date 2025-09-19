@@ -20,7 +20,7 @@ struct ContentView: View {
         .scaleEffect(animationAmount)
         .animation(
             .easeInOut(duration: 2)
-            .repeatCount(3, autoreverses: true),
+            .repeatForever(autoreverses: true),
             value: animationAmount
         )
     }
