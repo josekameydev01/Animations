@@ -18,7 +18,10 @@ struct ContentView: View {
         .foregroundStyle(.white)
         .clipShape(.circle)
         .scaleEffect(animationAmount)
-        .animation(.spring(duration: 1, bounce: 0.9), value: animationAmount)
+        .animation(
+            .easeInOut(duration: 2),
+            value: animationAmount
+        )
     }
 }
 
