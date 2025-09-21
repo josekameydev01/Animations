@@ -8,29 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var animationAmount = 1.0
+    @State private var userAnswer = true
     var body: some View {
-        print(animationAmount)
-        
-        return VStack {
-            Spacer()
-            
-            Stepper("Scale amount", value: $animationAmount.animation(
-                .easeInOut(duration: 1)
-                .repeatCount(3, autoreverses: true)
-            ), in: 1...10)
-            
-            Spacer()
-            Spacer()
-            
-            Button("Tap Me") {
-                animationAmount += 1
+        NavigationStack {
+            Form {
+                Section("Do you want something else?") {
+                    Picker("Answer", selection: $userAnswer.animation(
+                        .easeInOut(duration: 1)
+                        .repeatCount(3, autoreverses: true)
+                    )) {
+                        Text("YES").tag(true)
+                        Text("NO").tag(false)
+                    }
+                }
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(userAnswer ? .green : .red)
+                    .frame(width: 200, height: 100)
+                    .padding()
             }
-            .padding(40)
-            .background(.red)
-            .foregroundStyle(.white)
-            .clipShape(.circle)
-            .scaleEffect(animationAmount)
+            
+            Button("See answer") {
+                print(userAnswer)
+            }
+            .buttonStyle(.borderedProminent)
         }
     }
 }
