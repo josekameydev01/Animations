@@ -8,30 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var userAnswer = true
+    @State private var animationAmount = 0.0
     var body: some View {
-        NavigationStack {
-            Form {
-                Section("Do you want something else?") {
-                    Picker("Answer", selection: $userAnswer.animation(
-                        .easeInOut(duration: 1)
-                        .repeatCount(3, autoreverses: true)
-                    )) {
-                        Text("YES").tag(true)
-                        Text("NO").tag(false)
-                    }
-                }
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(userAnswer ? .green : .red)
-                    .frame(width: 200, height: 100)
-                    .padding()
+        Button("Tap Me") {
+            withAnimation {
+                animationAmount += 360
             }
-            
-            Button("See answer") {
-                print(userAnswer)
-            }
-            .buttonStyle(.borderedProminent)
         }
+        .padding(50)
+        .background(.red)
+        .foregroundStyle(.white)
+        .clipShape(.circle)
+        .rotation3DEffect(.degrees(animationAmount), axis: (x: 0, y: 0, z: 1))
     }
 }
 
