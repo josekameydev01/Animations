@@ -10,8 +10,8 @@ import SwiftUI
 struct ContentView: View {
     private var letters = Array("Hello Swift")
     
-    @State private var enable = false
-    @State private var dragAmount = CGSize.zero
+    @State private var dragAmounts: [CGSize] = Array(repeating: .zero, count: 11)
+    @State private var enableStates: [Bool] = Array(repeating: false, count: 11)
     
     var body: some View {
         HStack(spacing: 0) {
@@ -19,19 +19,19 @@ struct ContentView: View {
                 Text("\(letters[num])")
                     .padding(5)
                     .font(.title)
-                    .foregroundStyle(enable ? .green : .black)
-                    .offset(dragAmount)
-                    .animation(.linear.delay(Double(num) / 20), value: dragAmount)
+                    .foregroundStyle(enableStates[num] ? .green : .black)
+                    .offset(dragAmounts[num])
+                    .animation(.linear, value: dragAmounts[num])
+                    .gesture(
+                        DragGesture()
+                            .onChanged { dragAmounts[num] = $0.translation }
+                            .onEnded { _ in
+                                dragAmounts[num] = .zero
+                                enableStates[num].toggle()
+                            }
+                    )
             }
         }
-        .gesture(
-            DragGesture()
-                .onChanged { dragAmount = $0.translation }
-                .onEnded { _ in
-                    dragAmount = CGSize.zero
-                    enable.toggle()
-                }
-        )
     }
 }
 
